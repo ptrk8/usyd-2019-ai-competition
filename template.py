@@ -12,7 +12,7 @@ import numpy as np
 import h5py
 from keras.callbacks import Callback
 from sklearn.metrics import cohen_kappa_score
-from utils import get_custom_callback
+from utils import get_custom_callback, to_multi_label
 import os
 import sys
 
@@ -21,21 +21,6 @@ IMG_SIZE = 384  # this must correspond with what is in .h5 file
 NUM_CLASSES = 5  # 5 output classes
 NUM_EPOCHS = 50  # number of epochs
 BATCH_SIZE = 5
-
-
-def multi(arr):
-    arr_new = np.copy(arr)
-
-    for idx, val in enumerate(arr_new):
-        if val == 1:
-            break
-        arr_new[idx] = 1
-
-    return arr_new.astype('int16').tolist()
-
-
-def to_multi_label(arr):
-    return [multi(output) for output in arr]
 
 
 def main():

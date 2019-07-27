@@ -9,6 +9,21 @@ import time
 import os
 
 
+def multi(arr):
+    arr_new = np.copy(arr)
+
+    for idx, val in enumerate(arr_new):
+        if val == 1:
+            break
+        arr_new[idx] = 1
+
+    return arr_new.astype('int16').tolist()
+
+
+def to_multi_label(arr):
+    return np.asarray([multi(output) for output in arr])
+
+
 def get_multi_label_outputs(arr):
     return np.copy(arr).astype(int).sum(axis=1) - 1
 
