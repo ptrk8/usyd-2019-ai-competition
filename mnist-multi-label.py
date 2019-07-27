@@ -22,7 +22,7 @@ def main():
 
     # Model below this line ================================================
 
-    custom_callback = get_custom_callback('multi_class', './{}'.format(output_path_name))
+    custom_callback = get_custom_callback('multi_label', './{}'.format(output_path_name))
     callbacks_list = [custom_callback]
 
     image_height, image_width = 28, 28

@@ -27,6 +27,11 @@ def get_cur_milliseconds():
     return int(round(time.time() * 1000))
 
 
+def get_preds(arr):
+    arr = np.asarray(arr).astype(int)
+    mask = arr == 0
+    return np.clip(np.where(mask.any(1), mask.argmax(1), 5) - 1, 0, 4)
+
 class Metrics(Callback):
 
     def on_epoch_end(self, epoch, logs={}):
@@ -40,11 +45,13 @@ class Metrics(Callback):
         x_val, y_val = self.validation_data[:2]
         if self.out_type == 'multi_label':
             y_val = y_val.sum(axis=1) - 1
-            # print(y_val.sh)
             y_pred = self.model.predict(x_val) > 0.5
-            y_pred = y_pred.astype(int).sum(axis=1) - 1
+            y_pred_sum = y_pred.astype(int).sum(axis=1) - 1
             # Get quadratic weighted kappa
-            logs['kappa'] = cohen_kappa_score(y_val, y_pred, weights='quadratic')
+            logs['kappa'] = cohen_kappa_score(y_val, y_pred_sum, weights='quadratic')
+            # Get kappa for bestfittings method of encoding
+            y_pred_bestfitting = get_preds(y_pred)
+            logs['kappa_bestfitting'] = cohen_kappa_score(y_val, y_pred_bestfitting, weights='quadratic')
         elif self.out_type == 'multi_class':
             y_val = get_multi_class_outputs(y_val)
             y_pred = self.model.predict(x_val)
