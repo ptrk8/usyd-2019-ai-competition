@@ -61,6 +61,9 @@ def main():
     y_train = to_categorical(y_train, NUM_CLASSES)
     y_test = to_categorical(y_test, NUM_CLASSES)
 
+    y_train = to_multi_label(y_train)
+    y_test = to_multi_label(y_test)
+
     datagen = ImageDataGenerator(
         horizontal_flip=True,
         vertical_flip=True,
