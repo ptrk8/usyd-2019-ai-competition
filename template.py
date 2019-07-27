@@ -19,13 +19,23 @@ import sys
 
 IMG_SIZE = 384  # this must correspond with what is in .h5 file
 NUM_CLASSES = 5  # 5 output classes
-NUM_EPOCHS = 20  # number of epochs
-BATCH_SIZE = 3
+NUM_EPOCHS = 50  # number of epochs
+BATCH_SIZE = 5
 
 
-def get_values():
-    file = h5py.File('./data/data_rgb_384_processed.h5', 'r')
-    return file['x_train'], file['y_train'], file['x_test'], file['y_test']
+def multi(arr):
+    arr_new = np.copy(arr)
+
+    for idx, val in enumerate(arr_new):
+        if val == 1:
+            break
+        arr_new[idx] = 1
+
+    return arr_new.astype('int16').tolist()
+
+
+def to_multi_label(arr):
+    return [multi(output) for output in arr]
 
 
 def main():
@@ -40,16 +50,13 @@ def main():
     except FileExistsError:
         pass
 
-    custom_callback = get_custom_callback('multi_label', './{}'.format(output_path_name))
-
     # Model below this line ================================================
 
-
-
-
-    x_train, y_train, x_test, y_test = get_values()
-
+    custom_callback = get_custom_callback('multi_label', './{}'.format(output_path_name))
     callbacks_list = [custom_callback]
+
+    file = h5py.File('./data/data_rgb_384_processed.h5', 'r')
+    x_train, y_train, x_test, y_test = file['x_train'], file['y_train'], file['x_test'], file['y_test']
 
     y_train = to_categorical(y_train, NUM_CLASSES)
     y_test = to_categorical(y_test, NUM_CLASSES)
@@ -63,7 +70,7 @@ def main():
     model = Sequential()
 
     densenet = DenseNet121(
-        weights='./DenseNet-BC-121-32-no-top.h5',
+        weights='imagenet',
         include_top=False,
         input_shape=(IMG_SIZE, IMG_SIZE, 3)
     )
@@ -77,8 +84,8 @@ def main():
     model.summary()
 
     model.compile(loss='binary_crossentropy',
-                  optimizer=optimizers.Adam(lr=0.0001,decay=1e-6),
-                  # optimizer=optimizers.SGD(lr=0.0001, momentum=0.9),
+                  # optimizer=optimizers.Adam(lr=0.0001,decay=1e-6),
+                  optimizer=optimizers.SGD(lr=0.0001, momentum=0.9),
                   metrics=['accuracy'])
 
     # fits the model on batches with real-time data augmentation:
