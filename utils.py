@@ -42,7 +42,7 @@ def get_cur_milliseconds():
     return int(round(time.time() * 1000))
 
 
-def get_preds(arr):
+def get_best_preds(arr):
     arr = np.asarray(arr).astype(int)
     mask = arr == 0
     return np.clip(np.where(mask.any(1), mask.argmax(1), 5) - 1, 0, 4)
@@ -65,7 +65,7 @@ class Metrics(Callback):
             # Get quadratic weighted kappa
             logs['kappa'] = cohen_kappa_score(y_val, y_pred_sum, weights='quadratic')
             # Get kappa for bestfittings method of encoding
-            y_pred_bestfitting = get_preds(y_pred)
+            y_pred_bestfitting = get_best_preds(y_pred)
             logs['kappa_bestfitting'] = cohen_kappa_score(y_val, y_pred_bestfitting, weights='quadratic')
             print("val_kappa_bestfitting: {}".format(logs['kappa_bestfitting']))
         elif self.out_type == 'multi_class':
