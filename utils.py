@@ -52,6 +52,7 @@ class Metrics(Callback):
             # Get kappa for bestfittings method of encoding
             y_pred_bestfitting = get_preds(y_pred)
             logs['kappa_bestfitting'] = cohen_kappa_score(y_val, y_pred_bestfitting, weights='quadratic')
+            print("val_kappa_bestfitting: {}".format(logs['kappa_bestfitting']))
         elif self.out_type == 'multi_class':
             y_val = get_multi_class_outputs(y_val)
             y_pred = self.model.predict(x_val)
