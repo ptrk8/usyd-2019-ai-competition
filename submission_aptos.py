@@ -11,15 +11,16 @@ from keras.models import load_model
 from utils import get_cur_milliseconds, get_best_preds, get_pessimist_preds, get_sum_preds
 
 
-TEST_DATA_PATH_NAME = './data/data_rgb_512.h5'
+TEST_DATA_PATH_NAME = './aptos/aptos_rgb_512.h5'
 MODEL_PATH_NAME = './models/1564258222240_kappa_0.8155_val_acc_0.938_acc_0.9531.h5'
-SUBMISSION_PATH_NAME = './submissions'
+SUBMISSION_PATH_NAME = './submissions_aptos'
 BATCH_SIZE = 8
 
 
-def create_submission(predictions, milliseconds, encoding_name):
-    submission = pd.read_csv('./data/SampleSubmission.csv')
-    submission['Expected'] = predictions
+def create_submission(predictions, milliseconds, encoding_name, names):
+    submission = pd.DataFrame()
+    submission['id_code'] = names
+    submission['diagnosis'] = predictions
     submission.to_csv('{}/{}_{}_submission.csv'.format(SUBMISSION_PATH_NAME, milliseconds, encoding_name), index=False)
 
 
@@ -28,6 +29,11 @@ def main():
     # Retrieve values from file
     file = h5py.File(TEST_DATA_PATH_NAME, 'r')
     x_test = file['x_test']
+    x_name = file['x_name']
+
+    x_name = np.asarray(x_name).astype(str)
+    x_name = [name.split('.')[0] for name in x_name]
+
     x_test = np.asarray(x_test)
     x_test = x_test.astype('float16')
     # Preprocess x_test data
@@ -43,9 +49,9 @@ def main():
     y_pred_best = get_best_preds(y_pred)
     y_pred_pessimist = get_pessimist_preds(y_pred)
 
-    create_submission(y_pred_sum, milliseconds, 'sum_encoding')
-    create_submission(y_pred_best, milliseconds, 'best_encoding')
-    create_submission(y_pred_pessimist, milliseconds, 'pessimistic_encoding')
+    create_submission(y_pred_sum, milliseconds, 'sum_encoding', x_name)
+    create_submission(y_pred_best, milliseconds, 'best_encoding', x_name)
+    create_submission(y_pred_pessimist, milliseconds, 'pessimistic_encoding', x_name)
 
 
 if __name__ == '__main__':

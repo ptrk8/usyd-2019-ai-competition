@@ -59,6 +59,10 @@ def get_pessimist_preds(predictions):
     return [get_score(prediction) for prediction in predictions]
 
 
+def get_sum_preds(predictions):
+    return predictions.astype(int).sum(axis=1) - 1
+
+
 class Metrics(Callback):
 
     def on_epoch_end(self, epoch, logs={}):
@@ -73,7 +77,7 @@ class Metrics(Callback):
         if self.out_type == 'multi_label':
             y_val = y_val.sum(axis=1) - 1
             y_pred = self.model.predict(x_val) > 0.5
-            y_pred_sum = y_pred.astype(int).sum(axis=1) - 1
+            y_pred_sum = get_sum_preds(y_pred)
             # Get quadratic weighted kappa
             logs['kappa'] = cohen_kappa_score(y_val, y_pred_sum, weights='quadratic')
             # Get kappa for bestfittings method of encoding
