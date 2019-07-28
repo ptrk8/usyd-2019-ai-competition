@@ -8,7 +8,7 @@ import numpy as np
 import h5py
 import pandas as pd
 from keras.models import load_model
-from utils import get_cur_milliseconds, get_best_preds
+from utils import get_cur_milliseconds, get_best_preds, get_pessimist_preds
 
 
 TEST_DATA_PATH_NAME = './data/data_rgb_512.h5'
@@ -23,19 +23,8 @@ def create_submission(predictions, milliseconds, encoding_name):
     submission.to_csv('{}/{}_{}_submission.csv'.format(SUBMISSION_PATH_NAME, milliseconds, encoding_name), index=False)
 
 
-def get_score(prediction):
-    for idx, val in reversed(list(enumerate(prediction))):
-        if val:
-            return idx
-    return 0
-
-
 def get_sum_preds(predictions):
     return predictions.astype(int).sum(axis=1) - 1
-
-
-def get_pessimist_preds(predictions):
-    return [get_score(prediction) for prediction in predictions]
 
 
 def main():
