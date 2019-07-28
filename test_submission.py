@@ -49,8 +49,7 @@ class TestSubmission(unittest.TestCase):
 
         test = create_test_arr([1, 0, 0, 0, 0])
         result = sub.get_pessimist_preds(test)
-        self.assertEqual(result, [4])
-
+        self.assertEqual(result, [0])
 
 if __name__ == '__main__':
     unittest.main()
