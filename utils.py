@@ -7,6 +7,8 @@ import pytz
 from datetime import datetime
 import time
 import os
+from os import listdir
+from os.path import isfile, join
 
 
 def multi(arr):
@@ -36,6 +38,10 @@ def get_curr_datetime():
     tz = pytz.timezone('Australia/Melbourne')
     now = datetime.now(tz)
     return now.strftime("%m/%d/%Y, %H:%M:%S")
+
+
+def get_file_names_from_folder(folder_name):
+    return [f for f in listdir(folder_name) if isfile(join(folder_name, f))]
 
 
 def get_cur_milliseconds():
