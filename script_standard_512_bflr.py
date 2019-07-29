@@ -1,3 +1,6 @@
+import os
+os.environ["CUDA_VISIBLE_DEVICES"] = "1"
+
 import tensorflow as tf
 config = tf.ConfigProto()
 config.gpu_options.allow_growth = True
@@ -13,10 +16,8 @@ import h5py
 from keras.callbacks import Callback, LearningRateScheduler
 from sklearn.metrics import cohen_kappa_score
 from utils import get_custom_callback, to_multi_label, best_lr_decay
-import os
 import sys
 
-os.environ["CUDA_VISIBLE_DEVICES"] = "1"
 
 IMG_SIZE = 512  # this must correspond with what is in .h5 file
 NUM_CLASSES = 5  # 5 output classes
