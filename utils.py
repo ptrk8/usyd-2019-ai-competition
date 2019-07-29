@@ -9,7 +9,8 @@ import time
 import os
 from os import listdir
 from os.path import isfile, join
-
+import tensorflow as tf
+import keras.backend as K
 
 def multi(arr):
     arr_new = np.copy(arr)
@@ -69,6 +70,74 @@ def get_sum_preds(predictions):
     return predictions.astype(int).sum(axis=1) - 1
 
 
+# https://datascience.stackexchange.com/questions/45165/how-to-get-accuracy-f1-precision-and-recall-for-a-keras-model
+def recall_m(y_true, y_pred):
+    true_positives = K.sum(K.round(K.clip(y_true * y_pred, 0, 1)))
+    possible_positives = K.sum(K.round(K.clip(y_true, 0, 1)))
+    recall = true_positives / (possible_positives + K.epsilon())
+    return recall
+
+
+def precision_m(y_true, y_pred):
+    true_positives = K.sum(K.round(K.clip(y_true * y_pred, 0, 1)))
+    predicted_positives = K.sum(K.round(K.clip(y_pred, 0, 1)))
+    precision = true_positives / (predicted_positives + K.epsilon())
+    return precision
+
+
+def f1_m(y_true, y_pred):
+    precision = precision_m(y_true, y_pred)
+    recall = recall_m(y_true, y_pred)
+    return 2 * ((precision * recall) / (precision + recall + K.epsilon()))
+
+
+# # https://stackoverflow.com/questions/54831044/how-can-i-specify-a-loss-function-to-be-quadratic-weighted-kappa-in-keras
+# def get_cohen_kappa(weights='quadratic'):
+#     def _cohen_kappa_score(y_val, y_pred):
+#         print(y_val)
+#         # Get y_val values as array of integers [ 1, 2, 5 ]
+#         y_val = np.asarray(y_val).sum(axis=1) - 1
+#         y_pred_bool = y_pred > 0.5
+#         # Get y_pred values as array of boolean values [ True, False etc. ]
+#         y_pred_sum = get_sum_preds(y_pred_bool)
+#         score = cohen_kappa_score(y_val, y_pred_sum, weights=weights)
+#
+#         # score = cohen_kappa_score(y_val, y_pred, weights='quadratic')
+#         return -1 * score
+#     return _cohen_kappa_score
+
+# def _cohen_kappa(y_true, y_pred, num_classes=5, weights=None, metrics_collections=None, updates_collections=None, name=None):
+#     return tf.convert_to_tensor(cohen_kappa_score(K.eval(y_true), K.eval(y_pred), weights='quadratic'))
+
+def _cohen_kappa(y_true, y_pred, num_classes=5, weights=None, metrics_collections=None, updates_collections=None, name=None):
+    kappa, update_op = tf.contrib.metrics.cohen_kappa(y_true, y_pred, num_classes, weights, metrics_collections, updates_collections, name)
+    # kappa = K.cast(kappa, 'float32')
+    K.get_session().run(tf.local_variables_initializer())
+    with tf.control_dependencies([update_op]):
+        kappa = tf.identity(kappa)
+    return kappa
+
+
+def cohen_kappa_loss(num_classes=5, weights=None, metrics_collections=None, updates_collections=None, name=None):
+    def cohen_kappa(y_true, y_pred):
+        y_true = K.cast(y_true, 'int32')
+        # Threshold our tensors
+        y_pred = K.cast(y_pred + 0.5, 'int32')
+
+        y_true = K.sum(y_true, axis=1)
+        y_pred = K.sum(y_pred, axis=1)
+        # y_pred = tf.cast(y_pred, tf.float32)
+        # y_true = tf.cast(y_true, tf.float32)
+
+        return -_cohen_kappa(y_true, y_pred, num_classes, weights, metrics_collections, updates_collections, name)
+    return cohen_kappa
+
+
+def _round(val, decimals):
+    if not isinstance(val, str):
+        return round(val, decimals)
+    return val
+
 class Metrics(Callback):
 
     def on_epoch_end(self, epoch, logs={}):
@@ -105,19 +174,18 @@ class Metrics(Callback):
 
         # Add kappa to logs
         # logs['kappa'] = val_kappa
-
         # self.val_kappas.append(val_kappa)
+        logs_short = {key: _round(val, 4) for key, val in logs.items()}
         # Appends data to log file
         with open('{}/log.txt'.format(self.output_folder_path), 'a+') as log_file:
-            log_file.write('{}\n'.format(json.dumps(logs)))
+            log_file.write('{}\n'.format(json.dumps(logs_short)))
 
-        decimal_places = 4
         self.model.save('{}/{}_kappa_{}_val_acc_{}_acc_{}.h5'.format(
             self.output_folder_path,
             curr_millisecond,
-            round(logs['kappa'], decimal_places),
-            round(logs['val_acc'], decimal_places),
-            round(logs['acc'], decimal_places)
+            logs_short['kappa'],
+            logs_short['val_acc'],
+            logs_short['acc']
         ))
 
         # if _val_kappa == max(self.val_kappas):
