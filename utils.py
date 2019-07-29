@@ -162,8 +162,8 @@ def f1_loss(y_true, y_pred):
     f1 = tf.where(tf.is_nan(f1), tf.zeros_like(f1), f1)
     return 1 - K.mean(f1)
 
-
-def kappa_loss(y_pred, y_true, y_pow=2, eps=1e-10, N=5, bsize=10, name='kappa'):
+# https://www.kaggle.com/christofhenkel/weighted-kappa-loss-for-keras-tensorflow
+def kappa_loss_kaggle(y_pred, y_true, y_pow=2, eps=1e-10, N=5, bsize=10, name='kappa'):
     """A continuous differentiable approximation of discrete kappa loss.
         Args:
             y_pred: 2D tensor or array, [batch_size, num_classes]
@@ -206,21 +206,21 @@ def kappa_loss(y_pred, y_true, y_pow=2, eps=1e-10, N=5, bsize=10, name='kappa'):
         return -1 * nom / (denom + eps)
 
 
-def kappa_loss(predictions, labels, y_pow=1, eps=1e-15, num_ratings=5, batch_size=32, name='kappa'):
+# https://github.com/openAGI/tefla
+# https://openagi.github.io/tefla/core/losses/
+def kappa_loss_tefla(predictions, labels, y_pow=1, eps=1e-15, num_ratings=5, batch_size=10, name='kappa'):
     with tf.name_scope(name):
         labels = tf.to_float(labels)
         repeat_op = tf.to_float(
-        tf.tile(tf.reshape(tf.range(0, num_ratings), [num_ratings, 1]), [1, num_ratings]))
+            tf.tile(tf.reshape(tf.range(0, num_ratings), [num_ratings, 1]), [1, num_ratings]))
         repeat_op_sq = tf.square((repeat_op - tf.transpose(repeat_op)))
         weights = repeat_op_sq / tf.to_float((num_ratings - 1)**2)
 
         pred_ = predictions**y_pow
         try:
-            pred_norm = pred_ / \
-                (eps + tf.reshape(tf.reduce_sum(pred_, 1), [-1, 1]))
+            pred_norm = pred_ / (eps + tf.reshape(tf.reduce_sum(pred_, 1), [-1, 1]))
         except Exception:
-            pred_norm = pred_ / \
-                (eps + tf.reshape(tf.reduce_sum(pred_, 1), [batch_size, 1]))
+            pred_norm = pred_ / (eps + tf.reshape(tf.reduce_sum(pred_, 1), [batch_size, 1]))
 
         hist_rater_a = tf.reduce_sum(pred_norm, 0)
         hist_rater_b = tf.reduce_sum(labels, 0)
