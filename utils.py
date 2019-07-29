@@ -133,6 +133,22 @@ def cohen_kappa_loss(num_classes=5, weights=None, metrics_collections=None, upda
     return cohen_kappa
 
 
+# https://www.kaggle.com/c/human-protein-atlas-image-classification/discussion/78109
+# https://machinelearningmastery.com/using-learning-rate-schedules-deep-learning-models-python-keras/
+def best_lr_decay(epoch):
+    """Use with adam optimizer to mimic bestfitting"""
+    lr = 0.0003
+    if epoch > 25:
+        lr = 0.00015
+    if epoch > 30:
+        lr = 0.000075
+    if epoch > 35:
+        lr = 0.00003
+    if epoch > 40:
+        lr = 0.00001
+    return lr
+
+
 def _round(val, decimals):
     if not isinstance(val, str):
         return round(val, decimals)
