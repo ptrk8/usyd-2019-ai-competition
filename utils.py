@@ -91,6 +91,20 @@ def f1_m(y_true, y_pred):
     return 2 * ((precision * recall) / (precision + recall + K.epsilon()))
 
 
+def multi_label_acc(y_true, y_pred):
+    y_true = K.cast(y_true, 'int32')
+    y_pred = K.cast(y_pred + 0.5, 'int32')
+
+    y_true = K.sum(y_true, axis=1) - 1
+    y_pred = K.sum(y_pred, axis=1) - 1
+
+    y_diff = K.cast(y_true - y_pred, 'int32')
+    len_non_zero = K.cast(tf.math.count_nonzero(y_diff), 'int32')
+    len_diff = tf.size(y_diff)
+
+    return (len_diff - len_non_zero) / len_diff
+
+
 # # https://stackoverflow.com/questions/54831044/how-can-i-specify-a-loss-function-to-be-quadratic-weighted-kappa-in-keras
 # def get_cohen_kappa(weights='quadratic'):
 #     def _cohen_kappa_score(y_val, y_pred):
@@ -261,7 +275,7 @@ class Metrics(Callback):
         logs['millisecond'] = curr_millisecond
         # Get x_validation and y_validation
         x_val, y_val = self.validation_data[:2]
-        print(self.validation_data)
+        arr = self.validation_data[:2]
         if self.out_type == 'multi_label':
             y_val = y_val.sum(axis=1) - 1
             y_pred = self.model.predict(x_val) > 0.5
