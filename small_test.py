@@ -45,8 +45,8 @@ def main():
     x_train, y_train, x_test, y_test = file['x_train'], file['y_train'], file['x_test'], file['y_test']
 
     # x_train, x_test = preprocess_input(x_train), preprocess_input(x_test)
-    x_train = x_train[0:500]
-    y_train = y_train[0:500]
+    x_train = x_train[0:100]
+    y_train = y_train[0:100]
 
     y_train = to_categorical(y_train, NUM_CLASSES)
     y_test = to_categorical(y_test, NUM_CLASSES)

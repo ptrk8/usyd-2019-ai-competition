@@ -115,7 +115,7 @@ def _cohen_kappa(y_true, y_pred, num_classes=5, weights=None, metrics_collection
     K.get_session().run(tf.local_variables_initializer())
     with tf.control_dependencies([update_op]):
         kappa = tf.identity(kappa)
-    return kappa
+    return tf.to_float(kappa)
 
 
 def cohen_kappa_loss(num_classes=5, weights=None, metrics_collections=None, updates_collections=None, name=None):
@@ -150,6 +150,11 @@ def best_lr_decay(epoch):
 
 
 def _round(val, decimals):
+    try:
+        val = float(val)
+    except:
+        pass
+
     if not isinstance(val, str):
         return round(val, decimals)
     return val
@@ -187,11 +192,11 @@ class Metrics(Callback):
             print(y_pred.shape)
             # Get quadratic weighted kappa
             logs['kappa'] = cohen_kappa_score(y_val, y_pred, weights='quadratic')
-
         # Add kappa to logs
         # logs['kappa'] = val_kappa
         # self.val_kappas.append(val_kappa)
         logs_short = {key: _round(val, 4) for key, val in logs.items()}
+        # print(logs_short)
         # Appends data to log file
         with open('{}/log.txt'.format(self.output_folder_path), 'a+') as log_file:
             log_file.write('{}\n'.format(json.dumps(logs_short)))
