@@ -13,7 +13,7 @@ import numpy as np
 import h5py
 from keras.callbacks import Callback, LearningRateScheduler
 from sklearn.metrics import cohen_kappa_score
-from utils import get_custom_callback, to_multi_label, cohen_kappa_loss, f1_m, best_lr_decay
+from utils import get_custom_callback, to_multi_label, cohen_kappa_loss, f1_m, best_lr_decay, kappa_loss, f1_loss
 import os
 import sys
 
@@ -45,8 +45,8 @@ def main():
     x_train, y_train, x_test, y_test = file['x_train'], file['y_train'], file['x_test'], file['y_test']
 
     # x_train, x_test = preprocess_input(x_train), preprocess_input(x_test)
-    x_train = x_train[0:100]
-    y_train = y_train[0:100]
+    x_train = x_train
+    y_train = y_train
 
     y_train = to_categorical(y_train, NUM_CLASSES)
     y_test = to_categorical(y_test, NUM_CLASSES)
@@ -78,8 +78,10 @@ def main():
     model_cohen_kappa = cohen_kappa_loss(num_classes=5)
 
     # model_cohen_kappa = get_cohen_kappa()
-    model.compile(loss='binary_crossentropy',
-                  # loss=model_cohen_kappa,
+    model.compile(
+        # loss=kappa_loss,
+        #           loss=f1_loss,
+                  loss='binary_crossentropy',
                   optimizer=optimizers.Adam(),
                   # optimizer=optimizers.SGD(lr=0.0001, momentum=0.9),
                   metrics=['accuracy', f1_m])
