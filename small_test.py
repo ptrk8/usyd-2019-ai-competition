@@ -86,6 +86,7 @@ def main():
                   # optimizer=optimizers.SGD(lr=0.0001, momentum=0.9),
                   metrics=['accuracy', f1_m])
 
+    # return
     # fits the model on batches with real-time data augmentation:
     history = model.fit_generator(
         datagen.flow(x_train, y_train, batch_size=BATCH_SIZE, seed=1),
