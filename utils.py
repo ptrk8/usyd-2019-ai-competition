@@ -7,6 +7,8 @@ import pytz
 from datetime import datetime
 import time
 import os
+from os import listdir
+from os.path import isfile, join
 
 
 def multi(arr):
@@ -38,6 +40,10 @@ def get_curr_datetime():
     return now.strftime("%m/%d/%Y, %H:%M:%S")
 
 
+def get_file_names_from_folder(folder_name):
+    return [f for f in listdir(folder_name) if isfile(join(folder_name, f))]
+
+
 def get_cur_milliseconds():
     return int(round(time.time() * 1000))
 
@@ -59,6 +65,10 @@ def get_pessimist_preds(predictions):
     return [get_score(prediction) for prediction in predictions]
 
 
+def get_sum_preds(predictions):
+    return predictions.astype(int).sum(axis=1) - 1
+
+
 class Metrics(Callback):
 
     def on_epoch_end(self, epoch, logs={}):
@@ -73,7 +83,7 @@ class Metrics(Callback):
         if self.out_type == 'multi_label':
             y_val = y_val.sum(axis=1) - 1
             y_pred = self.model.predict(x_val) > 0.5
-            y_pred_sum = y_pred.astype(int).sum(axis=1) - 1
+            y_pred_sum = get_sum_preds(y_pred)
             # Get quadratic weighted kappa
             logs['kappa'] = cohen_kappa_score(y_val, y_pred_sum, weights='quadratic')
             # Get kappa for bestfittings method of encoding
