@@ -10,9 +10,9 @@ from keras.utils.np_utils import to_categorical
 from keras.preprocessing.image import ImageDataGenerator
 import numpy as np
 import h5py
-from keras.callbacks import Callback
+from keras.callbacks import Callback, LearningRateScheduler
 from sklearn.metrics import cohen_kappa_score
-from utils import get_custom_callback, to_multi_label
+from utils import get_custom_callback, to_multi_label, f1_m, best_lr_decay, f1_loss, multi_label_acc
 import os
 import sys
 
@@ -36,9 +36,9 @@ def main():
         pass
 
     # Model below this line ================================================
-
+    learn_rate = LearningRateScheduler(best_lr_decay, verbose=1)
     custom_callback = get_custom_callback('multi_label', './{}'.format(output_path_name))
-    callbacks_list = [custom_callback]
+    callbacks_list = [custom_callback, learn_rate]
 
     file = h5py.File('./data/data_rgb_384_processed.h5', 'r')
     x_train, y_train, x_test, y_test = file['x_train'], file['y_train'], file['x_test'], file['y_test']
@@ -74,7 +74,7 @@ def main():
     model.compile(loss='binary_crossentropy',
                   # optimizer=optimizers.Adam(lr=0.0001,decay=1e-6),
                   optimizer=optimizers.SGD(lr=0.0001, momentum=0.9),
-                  metrics=['accuracy'])
+                  metrics=[multi_label_acc, f1_m])
 
     # fits the model on batches with real-time data augmentation:
     history = model.fit_generator(
