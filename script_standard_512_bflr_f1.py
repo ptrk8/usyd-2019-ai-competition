@@ -15,7 +15,7 @@ import numpy as np
 import h5py
 from keras.callbacks import Callback, LearningRateScheduler
 from sklearn.metrics import cohen_kappa_score
-from utils import get_custom_callback, to_multi_label, best_lr_decay, f1_m
+from utils import get_custom_callback, to_multi_label, best_lr_decay, f1_m, f1_loss, multi_label_acc
 import sys
 
 
@@ -73,10 +73,11 @@ def main():
 
     model.summary()
 
-    model.compile(loss='binary_crossentropy',
+    model.compile(# loss='binary_crossentropy',
                   # optimizer=optimizers.Adam(lr=0.0001,decay=1e-6),
+                  loss=f1_loss,
                   optimizer=optimizers.SGD(lr=0.0001, momentum=0.9),
-                  metrics=['accuracy', f1_m])
+                  metrics=[multi_label_acc, f1_m])
 
     # fits the model on batches with real-time data augmentation:
     history = model.fit_generator(

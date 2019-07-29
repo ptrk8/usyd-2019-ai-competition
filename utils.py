@@ -148,7 +148,7 @@ def cohen_kappa_loss(num_classes=5, weights=None, metrics_collections=None, upda
         return 1 - _cohen_kappa(y_true, y_pred, num_classes, weights, metrics_collections, updates_collections, name)
     return cohen_kappa
 
-
+# https://www.kaggle.com/rejpalcz/best-loss-function-for-f1-score-metric
 def f1_loss(y_true, y_pred):
     tp = K.sum(K.cast(y_true * y_pred, 'float'), axis=0)
     tn = K.sum(K.cast((1 - y_true) * (1 - y_pred), 'float'), axis=0)
