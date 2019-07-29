@@ -10,12 +10,13 @@ from keras.utils.np_utils import to_categorical
 from keras.preprocessing.image import ImageDataGenerator
 import numpy as np
 import h5py
-from keras.callbacks import Callback
+from keras.callbacks import Callback, LearningRateScheduler
 from sklearn.metrics import cohen_kappa_score
-from utils import get_custom_callback, to_multi_label
+from utils import get_custom_callback, to_multi_label, best_lr_decay
 import os
 import sys
 
+os.environ["CUDA_VISIBLE_DEVICES"] = "1"
 
 IMG_SIZE = 512  # this must correspond with what is in .h5 file
 NUM_CLASSES = 5  # 5 output classes
@@ -36,9 +37,9 @@ def main():
         pass
 
     # Model below this line ================================================
-
+    learn_rate = LearningRateScheduler(best_lr_decay, verbose=1)
     custom_callback = get_custom_callback('multi_label', './{}'.format(output_path_name))
-    callbacks_list = [custom_callback]
+    callbacks_list = [custom_callback, learn_rate]
 
     file = h5py.File('/albona/nobackup/andrewl/DeepLearning/data/data_rgb_512_processed.h5', 'r')
     x_train, y_train, x_test, y_test = file['x_train'], file['y_train'], file['x_test'], file['y_test']
