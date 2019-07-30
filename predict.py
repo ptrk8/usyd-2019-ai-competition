@@ -55,7 +55,7 @@ def get_ensemble_preds(predictions_lst):
 
 
 def process_img_batch(path_names):
-    return [process_img(path, cv2.IMREAD_COLOR, 512) for path in path_names]
+    return [process_img(path, cv2.IMREAD_COLOR, 384) for path in path_names]
 
 
 def main():
@@ -69,6 +69,17 @@ def main():
     with Halo(text='Normalising Images...', spinner='dots'):
         x_test = np.asarray(x_test).astype('float16')
         x_test = preprocess_input(x_test)
+
+    x_name = [np.string_(name) for name in x_name]
+    # Create file
+    file = h5py.File('./data/test_rgb_{}.h5'.format(384), 'w')
+    # Create dataset
+    file.create_dataset('x_test', data=x_test)
+    file.create_dataset('x_name', data=x_name)
+    # Close file
+    file.close()
+
+    return
 
     model_names = listdir(ENSEMBLE_FOLDER)
     model_path_names = ['{}/{}'.format(ENSEMBLE_FOLDER, name) for name in model_names if isfile(join(ENSEMBLE_FOLDER, name))]

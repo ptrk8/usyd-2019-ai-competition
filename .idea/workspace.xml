@@ -2,12 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ef6f0bc8-6edc-46e4-bf9d-dde31311ccdd" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/predict.py" beforeDir="false" afterPath="$PROJECT_DIR$/predict.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/submission.py" beforeDir="false" afterPath="$PROJECT_DIR$/submission.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/submission_best_encoding.csv" beforeDir="false" afterPath="$PROJECT_DIR$/submission_best_encoding.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/submission_pessimistic_encoding.csv" beforeDir="false" afterPath="$PROJECT_DIR$/submission_pessimistic_encoding.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/submission_sum_encoding.csv" beforeDir="false" afterPath="$PROJECT_DIR$/submission_sum_encoding.csv" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -16,7 +11,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.46003476">
+    <splitter split-orientation="horizontal" split-proportion="0.46785405">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
           <file pinned="false" current-in-tab="false">
@@ -47,19 +42,10 @@
             </entry>
           </file>
           <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/lr_adam_lr_0.0001.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="1431">
-                  <caret line="53" column="33" selection-start-line="53" selection-start-column="33" selection-end-line="53" selection-end-column="33" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/utils.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="351">
-                  <caret line="289" column="25" selection-start-line="289" selection-start-column="25" selection-end-line="289" selection-end-column="25" />
+                <state relative-caret-position="508">
+                  <caret line="244" selection-start-line="244" selection-end-line="244" />
                   <folding>
                     <element signature="e#0#36#0" expanded="true" />
                   </folding>
@@ -68,10 +54,19 @@
             </entry>
           </file>
           <file pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/script_small_512_bflr.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="405">
+                  <caret line="15" column="27" lean-forward="true" selection-start-line="15" selection-start-column="27" selection-end-line="15" selection-end-column="27" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/submission.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-540">
-                  <caret line="16" column="4" selection-start-line="16" selection-start-column="4" selection-end-line="18" selection-end-column="8" />
+                <state relative-caret-position="783">
+                  <caret line="65" column="35" selection-start-line="65" selection-start-column="35" selection-end-line="65" selection-end-column="35" />
                 </state>
               </provider>
             </entry>
@@ -122,17 +117,17 @@
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/small_test.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="243">
-                  <caret line="30" column="36" selection-start-line="30" selection-start-column="36" selection-end-line="30" selection-end-column="36" />
+                <state relative-caret-position="702">
+                  <caret line="38" column="10" selection-start-line="38" selection-start-column="10" selection-end-line="38" selection-end-column="10" />
                 </state>
               </provider>
             </entry>
           </file>
-          <file pinned="false" current-in-tab="true">
+          <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/predict.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="670">
-                  <caret line="67" lean-forward="true" selection-start-line="67" selection-end-line="67" />
+                <state relative-caret-position="76">
+                  <caret line="60" column="11" selection-start-line="60" selection-start-column="11" selection-end-line="60" selection-end-column="11" />
                 </state>
               </provider>
             </entry>
@@ -149,7 +144,7 @@
               </provider>
             </entry>
           </file>
-          <file pinned="false" current-in-tab="false">
+          <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/script_standard_512_bflr.py">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="621">
@@ -267,6 +262,7 @@
         <option value="$PROJECT_DIR$/final.py" />
         <option value="$PROJECT_DIR$/submission.py" />
         <option value="$PROJECT_DIR$/predict.py" />
+        <option value="$PROJECT_DIR$/script_small_512_bflr.py" />
       </list>
     </option>
   </component>
@@ -513,13 +509,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/submission_aptos.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="378">
-          <caret line="14" column="51" selection-start-line="14" selection-start-column="51" selection-end-line="14" selection-end-column="51" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/submission_x_test.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="135">
@@ -585,10 +574,41 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/script_standard_512_bflr_f1.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="927">
+          <caret line="78" column="68" selection-start-line="78" selection-start-column="68" selection-end-line="78" selection-end-column="68" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/small_test.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="243">
-          <caret line="30" column="36" selection-start-line="30" selection-start-column="36" selection-end-line="30" selection-end-column="36" />
+        <state relative-caret-position="702">
+          <caret line="38" column="10" selection-start-line="38" selection-start-column="10" selection-end-line="38" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/submission.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="783">
+          <caret line="65" column="35" selection-start-line="65" selection-start-column="35" selection-end-line="65" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/predict.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="76">
+          <caret line="60" column="11" selection-start-line="60" selection-start-column="11" selection-end-line="60" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/submission_aptos.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="378">
+          <caret line="14" column="51" selection-start-line="14" selection-start-column="51" selection-end-line="14" selection-end-column="51" />
         </state>
       </provider>
     </entry>
@@ -601,35 +621,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/utils.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="351">
-          <caret line="289" column="25" selection-start-line="289" selection-start-column="25" selection-end-line="289" selection-end-column="25" />
+        <state relative-caret-position="508">
+          <caret line="244" selection-start-line="244" selection-end-line="244" />
           <folding>
             <element signature="e#0#36#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/script_standard_512_bflr_f1.py">
+    <entry file="file://$PROJECT_DIR$/script_small_512_bflr.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="927">
-          <caret line="78" column="68" selection-start-line="78" selection-start-column="68" selection-end-line="78" selection-end-column="68" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/submission.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-540">
-          <caret line="16" column="4" selection-start-line="16" selection-start-column="4" selection-end-line="18" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/predict.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="670">
-          <caret line="67" lean-forward="true" selection-start-line="67" selection-end-line="67" />
+        <state relative-caret-position="405">
+          <caret line="15" column="27" lean-forward="true" selection-start-line="15" selection-start-column="27" selection-end-line="15" selection-end-column="27" />
         </state>
       </provider>
     </entry>
