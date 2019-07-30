@@ -61,7 +61,8 @@ def main():
     model = Sequential()
 
     resnet = ResNet18(
-        input_shape=(IMG_SIZE, IMG_SIZE, 3)
+        input_shape=(IMG_SIZE, IMG_SIZE, 3),
+        classes=10
     )
 
     model.add(resnet)
