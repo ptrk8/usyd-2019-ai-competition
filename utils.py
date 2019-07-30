@@ -11,6 +11,33 @@ from os import listdir
 from os.path import isfile, join
 import tensorflow as tf
 import keras.backend as K
+from multiprocessing import Pool
+
+
+def split_list(lst, n):
+    """Splits list into equal chunks. Returns a generator. Use list() to convert to list. https://stackoverflow.com/questions/2130016/splitting-a-list-into-n-parts-of-approximately-equal-length"""
+    k, m = divmod(len(lst), n)
+    return (lst[i * k + min(i, m):(i + 1) * k + min(i + 1, m)] for i in range(n))
+
+
+def flatten_list(lst):
+    return [item for sublist in lst for item in sublist]
+
+
+def multi_process(func, args, num_processes):
+    """"First argument in args tuple must be the data."""
+    if len(args) < 1:
+        print('Parallelize has no args')
+        sys.exit(1)
+    chunks = list(split_list(args[0], num_processes))
+    pool = Pool(processes=num_processes)
+    # https://stackoverflow.com/questions/1993727/expanding-tuples-into-arguments
+    starmap_args = map(lambda chunk: (chunk, *args[1:]), chunks)
+    result = pool.starmap(func, starmap_args)
+    pool.close()
+    pool.join()
+    return flatten_list(result)
+
 
 def multi(arr):
     arr_new = np.copy(arr)
