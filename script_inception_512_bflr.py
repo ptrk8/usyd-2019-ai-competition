@@ -9,7 +9,7 @@ session = tf.Session(config=config)
 from keras import optimizers
 from keras import layers, Sequential
 # https://github.com/keras-team/keras-contrib
-from keras.applications.nasnet import NASNetMobile
+from keras.applications.inception_v3 import InceptionV3
 from keras.utils.np_utils import to_categorical
 from keras.preprocessing.image import ImageDataGenerator
 import numpy as np
@@ -60,13 +60,13 @@ def main():
 
     model = Sequential()
 
-    nasnet = NASNetMobile(
+    inception = InceptionV3(
         weights='imagenet',
         include_top=False,
         input_shape=(IMG_SIZE, IMG_SIZE, 3)
     )
 
-    model.add(nasnet)
+    model.add(inception)
     model.add(layers.GlobalAveragePooling2D())
     model.add(layers.Dropout(0.5))
     # model.add(layers.Dense(NUM_CLASSES, activation='softmax'))
