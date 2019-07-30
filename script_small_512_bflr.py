@@ -66,7 +66,7 @@ def main():
     )
 
     model.add(resnet)
-    model.add(layers.GlobalAveragePooling2D())
+    # model.add(layers.GlobalAveragePooling2D())
     model.add(layers.Dropout(0.5))
     # model.add(layers.Dense(NUM_CLASSES, activation='softmax'))
     model.add(layers.Dense(NUM_CLASSES, activation='sigmoid'))
