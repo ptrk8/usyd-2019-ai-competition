@@ -312,7 +312,7 @@ class Metrics(Callback):
             curr_millisecond,
             logs_short['kappa'],
             logs_short['val_multi_label_acc'],
-            logs_short['acc']
+            logs_short['multi_label_acc']
         ))
 
         # if _val_kappa == max(self.val_kappas):
