@@ -9,7 +9,7 @@ session = tf.Session(config=config)
 from keras import optimizers
 from keras import layers, Sequential
 # https://github.com/keras-team/keras-contrib
-from keras_contrib.applications.resnet import ResNet18
+from keras.applications.mobilenet import MobileNet
 from keras.utils.np_utils import to_categorical
 from keras.preprocessing.image import ImageDataGenerator
 import numpy as np
@@ -60,13 +60,14 @@ def main():
 
     model = Sequential()
 
-    resnet = ResNet18(
-        input_shape=(IMG_SIZE, IMG_SIZE, 3),
-        classes=10
+    mobilenet = MobileNet(
+        weights='imagenet',
+        include_top=False,
+        input_shape=(IMG_SIZE, IMG_SIZE, 3)
     )
 
-    model.add(resnet)
-    # model.add(layers.GlobalAveragePooling2D())
+    model.add(mobilenet)
+    model.add(layers.GlobalAveragePooling2D())
     model.add(layers.Dropout(0.5))
     # model.add(layers.Dense(NUM_CLASSES, activation='softmax'))
     model.add(layers.Dense(NUM_CLASSES, activation='sigmoid'))
