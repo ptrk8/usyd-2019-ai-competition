@@ -9,11 +9,17 @@ import numpy as np
 import h5py
 import pandas as pd
 from keras.models import load_model
-from utils import get_cur_milliseconds, get_best_preds, get_pessimist_preds, get_sum_preds, get_file_names_from_folder
+from utils import get_cur_milliseconds, \
+    get_best_preds, \
+    get_pessimist_preds, \
+    get_sum_preds, \
+    get_file_names_from_folder, \
+    f1_loss, \
+    multi_label_acc, \
+    f1_m
 import sys
 
-
-TEST_DATA_PATH_NAME = './data/data_rgb_384.h5'
+TEST_DATA_PATH_NAME = './data/data_rgb_512.h5'
 SUBMISSION_FOLDER = './submissions'
 ENSEMBLE_FOLDER = './ensemble'
 BATCH_SIZE = 8
@@ -26,7 +32,9 @@ def create_submission(predictions, milliseconds, encoding_name):
 
 
 def model_predict(x_test, path_to_model, batch_size):
-    model = load_model(path_to_model)
+    model = load_model(path_to_model, custom_objects={'f1_loss': f1_loss,
+                                                      'multi_label_acc': multi_label_acc,
+                                                      'f1_m': f1_m})
     predictions = model.predict(x_test, batch_size=batch_size, verbose=1)
     # Returns boolean array of True and False [ True, False, False, ... ]
     return predictions > 0.5
