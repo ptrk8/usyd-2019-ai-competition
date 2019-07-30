@@ -28,7 +28,7 @@ from halo import Halo
 from pprint import pprint
 from keras.preprocessing.image import ImageDataGenerator
 
-TEST_DATA_PATH_NAME = './data/test_rgb_512_processed.h5'
+TEST_DATA_PATH_NAME = './data/test_rgb_384_processed.h5'
 SUBMISSION_FOLDER = './submissions'
 ENSEMBLE_FOLDER = './ensemble'
 BATCH_SIZE = 8
@@ -50,9 +50,9 @@ def model_predict(x_test, path_to_model, batch_size=10):
         vertical_flip=True,
         rotation_range=360
     )
+    # https://towardsdatascience.com/test-time-augmentation-tta-and-how-to-perform-it-with-keras-4ac19b67fb4d
     tta_steps = 5
     predictions = []
-
     for i in range(tta_steps):
         preds = model.predict_generator(datagen.flow(x_test,
                                                      batch_size=batch_size,
