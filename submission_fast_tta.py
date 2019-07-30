@@ -41,7 +41,7 @@ def create_submission(predictions, milliseconds, encoding_name, x_names):
     submission.to_csv('{}/{}_{}_submission.csv'.format(SUBMISSION_FOLDER, milliseconds, encoding_name), index=False)
 
 
-def model_predict(x_test, path_to_model, batch_size):
+def model_predict(x_test, path_to_model, batch_size=10):
     model = load_model(path_to_model, custom_objects={'f1_loss': f1_loss,
                                                       'multi_label_acc': multi_label_acc,
                                                       'f1_m': f1_m})
@@ -51,28 +51,22 @@ def model_predict(x_test, path_to_model, batch_size):
         rotation_range=360
     )
     tta_steps = 5
-    batch_size = 32
     predictions = []
 
     for i in range(tta_steps):
         preds = model.predict_generator(datagen.flow(x_test,
                                                      batch_size=batch_size,
-                                                     shuffle=False),
-                                        steps=len(x_test) // batch_size)
+                                                     shuffle=False,
+                                                     seed=1),
+                                        steps=len(x_test) / batch_size)
         predictions.append(preds)
-    print(predictions[0])
-    return
 
-    pred = np.mean(predictions, axis=0)
+    pred = np.mean(np.asarray(predictions), axis=0)
 
-    np.mean(np.equal(np.argmax(y_val, axis=-1), np.argmax(pred, axis=-1)))
-
-
-
-
-    predictions = model.predict(x_test, batch_size=batch_size, verbose=1)
+    # np.mean(np.equal(np.argmax(y_val, axis=-1), np.argmax(pred, axis=-1)))
+    # predictions = model.predict(x_test, batch_size=batch_size, verbose=1)
     # Returns boolean array of True and False [ True, False, False, ... ]
-    return predictions > 0.5
+    return pred > 0.5
 
 
 def get_ensemble_preds(predictions_lst):
@@ -92,13 +86,13 @@ def main():
     x_name = file['x_name']
 
     x_name = np.asarray(x_name).astype(str)
-    x_test = np.asarray(x_test)
-    x_test = x_test.astype('float16')
+    x_test = np.asarray(x_test).astype('float16')
 
     model_names = listdir(ENSEMBLE_FOLDER)
     model_path_names = ['{}/{}'.format(ENSEMBLE_FOLDER, name) for name in model_names if isfile(join(ENSEMBLE_FOLDER, name))]
     # Returns array of arrays containing arrays with True and False [[[True, False...]], [...], ...]
     y_preds = [model_predict(x_test, path, BATCH_SIZE) for path in model_path_names]
+
     # Returns array of arrays containing values [[1, 4, 2 ...], [...], ... ]
     y_preds_sum = [get_sum_preds(pred) for pred in y_preds]
     y_preds_best = [get_best_preds(pred) for pred in y_preds]
