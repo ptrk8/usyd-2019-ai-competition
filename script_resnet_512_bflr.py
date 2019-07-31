@@ -58,7 +58,12 @@ def main():
         rotation_range=360
     )
 
-    model = load_model('/albona/nobackup/andrewl/dl-models/_script_resnet_512_bflr_outputs/1564544511189_kappa_0.7919_val_acc_0.8098_acc_0.7967.h5')
+    model = load_model(
+        '/albona/nobackup/andrewl/dl-models/_script_resnet_512_bflr_outputs/1564544511189_kappa_0.7919_val_acc_0.8098_acc_0.7967.h5',
+        custom_objects={'f1_loss': f1_loss,
+                        'multi_label_acc': multi_label_acc,
+                        'f1_m': f1_m}
+    )
 
     # model = Sequential()
     #

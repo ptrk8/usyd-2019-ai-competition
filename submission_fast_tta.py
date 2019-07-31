@@ -93,18 +93,21 @@ def main():
     # Returns array of arrays containing arrays with True and False [[[True, False...]], [...], ...]
     y_preds = [model_predict(x_test, path, BATCH_SIZE) for path in model_path_names]
 
-    # Returns array of arrays containing values [[1, 4, 2 ...], [...], ... ]
-    y_preds_sum = [get_sum_preds(pred) for pred in y_preds]
-    y_preds_best = [get_best_preds(pred) for pred in y_preds]
-    y_preds_pessimist = [get_pessimist_preds(pred) for pred in y_preds]
+    with Halo(text='Getting Predictions...', spinner='dots'):
+        # Returns array of arrays containing values [[1, 4, 2 ...], [...], ... ]
+        y_preds_sum = [get_sum_preds(pred) for pred in y_preds]
+        y_preds_best = [get_best_preds(pred) for pred in y_preds]
+        y_preds_pessimist = [get_pessimist_preds(pred) for pred in y_preds]
 
-    y_pred_sum = get_ensemble_preds(y_preds_sum)
-    y_pred_best = get_ensemble_preds(y_preds_best)
-    y_pred_pessimist = get_ensemble_preds(y_preds_pessimist)
+    with Halo(text='Ensembling...', spinner='dots'):
+        y_pred_sum = get_ensemble_preds(y_preds_sum)
+        y_pred_best = get_ensemble_preds(y_preds_best)
+        y_pred_pessimist = get_ensemble_preds(y_preds_pessimist)
 
-    create_submission(y_pred_sum, milliseconds, 'sum_encoding', x_name)
-    create_submission(y_pred_best, milliseconds, 'best_encoding', x_name)
-    create_submission(y_pred_pessimist, milliseconds, 'pessimistic_encoding', x_name)
+    with Halo(text='Creating submissions...', spinner='dots'):
+        create_submission(y_pred_sum, milliseconds, 'sum_encoding', x_name)
+        create_submission(y_pred_best, milliseconds, 'best_encoding', x_name)
+        create_submission(y_pred_pessimist, milliseconds, 'pessimistic_encoding', x_name)
 
 if __name__ == '__main__':
     main()
