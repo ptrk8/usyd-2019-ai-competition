@@ -56,8 +56,13 @@ def process_img_batch(path_names):
 
 def main():
 
-    x_name = listdir(TEST_FOLDER)
-    img_path_names = ['{}/{}'.format(TEST_FOLDER, name) for name in x_name if isfile(join(TEST_FOLDER, name))]
+    if len(sys.argv) < 2:
+        print('You must enter the path to the test images as the first argument of the script.')
+        sys.exit(1)
+
+    path_to_test_imgs = sys.argv[1]
+    x_name = listdir(path_to_test_imgs)
+    img_path_names = ['{}/{}'.format(path_to_test_imgs, name) for name in x_name if isfile(join(path_to_test_imgs, name))]
     with Halo(text='Processing Images...', spinner='dots'):
         x_test = multi_process(process_img_batch, (img_path_names,), 4)
         # x_test = process_img_batch(img_path_names)

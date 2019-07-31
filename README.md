@@ -2,7 +2,7 @@
 
 ## Install
 
-To run our ensemble, simply run the `predict.py` file as shown below.
+To run our ensemble, simply run the `predict.py` file as shown below. The submission file will be output in the directory this github repo will be saved down to.
 
 ```bash
 $ python predict.py /path/to/input/files
@@ -52,6 +52,7 @@ We experimented with image height and widths of 256, 384 and 512 pixels and obse
 - Xception
 - VGG16
 - ResNet18
+- ResNet34
 - ResNet50
 - InceptionV3
 - MobileNetV2
@@ -64,7 +65,7 @@ We experimented with image height and widths of 256, 384 and 512 pixels and obse
 
 ### Class types we experimented with
 
-We experimented with class types by representing the problem as a multi-class and multi-label problem and observed our model performed better when the problem was represented as a multi-label problem. This can be justified by the fact that certain features in more severe cases of diabetic retinopathy may also be present in less severe cases. Below is how we encoded each label as a multi class
+We experimented with class types by representing the problem as a multi-class, regression and multi-label problem and observed our model performed better when the problem was represented as a multi-label problem. This can be justified by the fact that certain features in more severe cases of diabetic retinopathy may also be present in less severe cases. Below is how we encoded each label as a multi class
 
 ```bash
 Label: 0 => [1, 0, 0, 0, 0]
@@ -76,7 +77,7 @@ Label: 4 => [1, 1, 1, 1, 1]
 
 ### Loss functions we experimented with
 
- Since we opted to represent the problem as a mu
+ Since we opted to represent the problem as a multi-class problem, we used the binary cross entropy function. 
 
 ### Optimizers we experimented with
 - Stochastic Gradient Descent (with and without momentum)
