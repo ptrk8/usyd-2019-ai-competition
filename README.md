@@ -55,6 +55,8 @@ def get_clahe_img(img, clip_limit, grid_size):
 
 However, we settled with standard RGB images since we didn't observe significant improvements using the above filters.
 
+Since we used transfer learning, we also preprocessed images according to what the models were original trained on. For example, for DenseNet121, we mean-centred all images.
+
 ### Image sizes we tried
 We experimented with image height and widths of 256, 384 and 512 pixels and observed a positive relationship between image size and our model's predictive power so we settled on using images of 512 pixels in height and width.
 
@@ -198,7 +200,6 @@ Our experiments showed optimising on F1-score yielded similar results to binary 
 - Adagrad
 - AdaBoost
 - RMSProp
-- 
 
 From our experiments we concluded that SGD typically converged to a more globally optimal solution than dynamic optimizers like Adam.
 
