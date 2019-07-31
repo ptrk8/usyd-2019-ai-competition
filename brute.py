@@ -9,10 +9,11 @@ from sklearn.metrics import cohen_kappa_score
 import h5py
 from keras.applications.densenet import preprocess_input
 import numpy as np
-from utils import f1_loss, multi_label_acc, f1_m
+from utils import f1_loss, multi_label_acc, f1_m, get_cur_milliseconds
 from os import listdir
 from os.path import isfile, join, getsize
 from pprint import pprint
+import pandas as pd
 
 DIRECTORY = 'D:/diabetes/models/_script_standard_512_outputs'
 model_names = listdir(DIRECTORY)
@@ -44,4 +45,8 @@ for path in model_path_names:
     kappas.append(val)
     pprint(val)
 
+
 print(kappas)
+kappas = pd.DataFrame(kappas)
+milliseconds = get_cur_milliseconds()
+kappas.to_csv('{}_brute.csv'.format(milliseconds), index=False)
