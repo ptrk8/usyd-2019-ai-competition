@@ -50,10 +50,6 @@ def model_predict(x_test, path_to_model, batch_size):
     return predictions > 0.5
 
 
-# def process_img_batch(path_names):
-#     return [process_img(path, cv2.IMREAD_COLOR, 384) for path in path_names]
-
-
 def main():
     milliseconds = get_cur_milliseconds()
     # Retrieve values from file

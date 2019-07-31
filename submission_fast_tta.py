@@ -3,7 +3,6 @@ config = tf.ConfigProto()
 config.gpu_options.allow_growth = True
 session = tf.Session(config=config)
 
-from scipy import stats
 from keras.applications.densenet import preprocess_input, DenseNet121
 import numpy as np
 import h5py

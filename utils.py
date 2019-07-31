@@ -12,6 +12,7 @@ from os.path import isfile, join
 import tensorflow as tf
 import keras.backend as K
 from multiprocessing import Pool
+from scipy import stats
 
 
 def get_ensemble_preds(predictions_lst):
