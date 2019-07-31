@@ -44,13 +44,39 @@ def get_clahe_img(img, clip_limit, grid_size):
 
 However, we settled with standard RGB images since we didn't observe significant improvements using the above filters.
 
-### Image Sizes
-We experimented with image height and widths of 256, 384 and 512 pixels and observed a positive relationship between image size and our model's predictive power so we settled on using images of 512 pixels high and wide.
+### Image sizes we tried
+We experimented with image height and widths of 256, 384 and 512 pixels and observed a positive relationship between image size and our model's predictive power so we settled on using images of 512 pixels in height and width.
 
-### Models Used
+### Models we experimented with
 
+- Xception
+- VGG16
+- ResNet18
+- ResNet50
+- InceptionV3
+- MobileNetV2
+- DenseNet121
 
+### Models we used in our final ensemble
 
+- DenseNet121
+- 
+
+### Class types we experimented with
+
+We experimented with class types by representing the problem as a multi-class and multi-label problem and observed our model performed better when the problem was represented as a multi-label problem. This can be justified by the fact that certain features in more severe cases of diabetic retinopathy may also be present in less severe cases. Below is how we encoded each label as a multi class
+
+```bash
+Label: 0 => [1, 0, 0, 0, 0]
+Label: 1 => [1, 1, 0, 0, 0]
+Label: 2 => [1, 1, 1, 0, 0]
+Label: 3 => [1, 1, 1, 1, 0]
+Label: 4 => [1, 1, 1, 1, 1]
+```
+
+### Loss functions we experimented with
+
+ Since we opted to represent the problem as a mu
 
 ### Optimizers we experimented with
 - Stochastic Gradient Descent (with and without momentum)
