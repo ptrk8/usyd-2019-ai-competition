@@ -16,3 +16,4 @@ small_test.py
 submission_aptos.py
 test*
 *.h5
+tmp/
