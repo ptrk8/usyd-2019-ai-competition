@@ -136,8 +136,6 @@ Our experiments showed optimising on F1-score yielded similar results to binary 
 
 From our experiments we concluded that SGD typically converged to a more globally optimal solution than dynamic optimizers like Adam.
 
-
-
 ### Learning rate schedule
 
 We experimented with constant learning rates ranging from 0.1 to 0.00001 as well as scheduled learning rates like the one below. We settled on the following learning rate schedule since our solution uses models with pre-trained weights, justifying our lower initial learning rate.
@@ -167,3 +165,22 @@ datagen = ImageDataGenerator(
 )
 ```
 
+### Test Time Augmentation (TTA)
+We also experimented with test time augmentation (below); however, experienced worse results and therefore decided to opt against using it in our final model.
+
+```python
+def model_predict(x_test, path_to_model, batch_size=10):
+    model = load_model(path_to_model, custom_objects={'f1_loss': f1_loss, 'multi_label_acc': multi_label_acc, 'f1_m': f1_m})
+    datagen = ImageDataGenerator(
+        horizontal_flip=True,
+        vertical_flip=True,
+        rotation_range=360
+    )
+    tta_steps = 5
+    predictions = []
+    for i in range(tta_steps):
+        preds = model.predict_generator(datagen.flow(x_test, batch_size=batch_size, shuffle=False, seed=1), steps=len(x_test) / batch_size)
+        predictions.append(preds)
+    pred = np.mean(np.asarray(predictions), axis=0)
+    return pred > 0.5
+```
