@@ -18,7 +18,7 @@ from keras.callbacks import Callback, LearningRateScheduler
 from sklearn.metrics import cohen_kappa_score
 from utils import get_custom_callback, to_multi_label, best_lr_decay, f1_m, f1_loss, multi_label_acc
 import sys
-
+from keras.models import load_model
 
 IMG_SIZE = 512  # this must correspond with what is in .h5 file
 NUM_CLASSES = 5  # 5 output classes
@@ -58,21 +58,23 @@ def main():
         rotation_range=360
     )
 
-    model = Sequential()
+    model = load_model('/albona/nobackup/andrewl/dl-models/_script_resnet_512_bflr_outputs/1564544511189_kappa_0.7919_val_acc_0.8098_acc_0.7967.h5')
 
-    resnet = ResNet50(
-        weights='imagenet',
-        include_top=False,
-        input_shape=(IMG_SIZE, IMG_SIZE, 3)
-    )
-
-    model.add(resnet)
-    model.add(layers.GlobalAveragePooling2D())
-    model.add(layers.Dropout(0.5))
-    # model.add(layers.Dense(NUM_CLASSES, activation='softmax'))
-    model.add(layers.Dense(NUM_CLASSES, activation='sigmoid'))
-
-    model.summary()
+    # model = Sequential()
+    #
+    # resnet = ResNet50(
+    #     weights='imagenet',
+    #     include_top=False,
+    #     input_shape=(IMG_SIZE, IMG_SIZE, 3)
+    # )
+    #
+    # model.add(resnet)
+    # model.add(layers.GlobalAveragePooling2D())
+    # model.add(layers.Dropout(0.5))
+    # # model.add(layers.Dense(NUM_CLASSES, activation='softmax'))
+    # model.add(layers.Dense(NUM_CLASSES, activation='sigmoid'))
+    #
+    # model.summary()
 
     model.compile(loss='binary_crossentropy',
                   # optimizer=optimizers.Adam(lr=0.0001,decay=1e-6),
