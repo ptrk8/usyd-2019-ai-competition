@@ -14,6 +14,21 @@ import keras.backend as K
 from multiprocessing import Pool
 
 
+def get_ensemble_preds(predictions_lst):
+    predictions_lst = np.asarray(predictions_lst)
+    mode = stats.mode(predictions_lst, axis=0)
+    mode_arr, count_arr = mode[0][0], mode[1][0]
+    median_arr = np.median(predictions_lst, axis=0)
+    # print('=============================================')
+    # print(count_arr)
+    # If there is complete disagreement across all, break ties by choosing median
+    for idx, val in enumerate(count_arr):
+        if val == 1:
+            mode_arr[idx] = median_arr[idx]
+
+    return mode_arr
+
+
 def split_list(lst, n):
     """Splits list into equal chunks. Returns a generator. Use list() to convert to list. https://stackoverflow.com/questions/2130016/splitting-a-list-into-n-parts-of-approximately-equal-length"""
     k, m = divmod(len(lst), n)

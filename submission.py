@@ -16,7 +16,8 @@ from utils import get_cur_milliseconds, \
     get_file_names_from_folder, \
     f1_loss, \
     multi_label_acc, \
-    f1_m
+    f1_m, \
+    get_ensemble_preds
 import sys
 
 TEST_DATA_PATH_NAME = './data/data_rgb_512.h5'
@@ -38,11 +39,6 @@ def model_predict(x_test, path_to_model, batch_size):
     predictions = model.predict(x_test, batch_size=batch_size, verbose=1)
     # Returns boolean array of True and False [ True, False, False, ... ]
     return predictions > 0.5
-
-
-def get_ensemble_preds(predictions_lst):
-    mode = stats.mode(np.asarray(predictions_lst))
-    return mode[0][0]
 
 
 def main():

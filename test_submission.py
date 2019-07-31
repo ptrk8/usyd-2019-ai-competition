@@ -56,8 +56,13 @@ class TestSubmission(unittest.TestCase):
                 [5, 2, 2, 1, 4, 1],
                 [3, 3, 2, 2, 1, 1]]
         result = sub.get_ensemble_preds(test)
-        self.assertEqual(result.tolist(), [1, 3, 2, 2, 1, 1])
+        self.assertEqual(result.tolist(), [3, 3, 2, 2, 2, 1])
 
+        # test = [[1, 3, 4, 2, 2, 7],
+        #         [5, 2, 2, 1, 4, 1],
+        #         [3, 3, 2, 2, 1, 1]]
+        # result = sub.get_ensemble_preds(test)
+        # self.assertEqual(result.tolist(), [1, 3, 2, 2, 1, 1])
 
 if __name__ == '__main__':
     unittest.main()

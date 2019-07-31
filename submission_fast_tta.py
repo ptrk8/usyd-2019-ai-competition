@@ -17,7 +17,8 @@ from utils import get_cur_milliseconds, \
     multi_process, \
     f1_loss, \
     multi_label_acc, \
-    f1_m
+    f1_m, \
+    get_ensemble_preds
 import sys
 from os import listdir
 from os.path import isfile, join
@@ -45,33 +46,27 @@ def model_predict(x_test, path_to_model, batch_size=10):
     model = load_model(path_to_model, custom_objects={'f1_loss': f1_loss,
                                                       'multi_label_acc': multi_label_acc,
                                                       'f1_m': f1_m})
-    datagen = ImageDataGenerator(
-        horizontal_flip=True,
-        vertical_flip=True,
-        rotation_range=360
-    )
-    # https://towardsdatascience.com/test-time-augmentation-tta-and-how-to-perform-it-with-keras-4ac19b67fb4d
-    tta_steps = 5
-    predictions = []
-    for i in range(tta_steps):
-        preds = model.predict_generator(datagen.flow(x_test,
-                                                     batch_size=batch_size,
-                                                     shuffle=False,
-                                                     seed=1),
-                                        steps=len(x_test) / batch_size)
-        predictions.append(preds)
+    # datagen = ImageDataGenerator(
+    #     horizontal_flip=True,
+    #     vertical_flip=True,
+    #     rotation_range=360
+    # )
+    # # https://towardsdatascience.com/test-time-augmentation-tta-and-how-to-perform-it-with-keras-4ac19b67fb4d
+    # tta_steps = 5
+    # predictions = []
+    # for i in range(tta_steps):
+    #     preds = model.predict_generator(datagen.flow(x_test,
+    #                                                  batch_size=batch_size,
+    #                                                  shuffle=False,
+    #                                                  seed=1),
+    #                                     steps=len(x_test) / batch_size)
+    #     predictions.append(preds)
+    #
+    # pred = np.mean(np.asarray(predictions), axis=0)
 
-    pred = np.mean(np.asarray(predictions), axis=0)
-
-    # np.mean(np.equal(np.argmax(y_val, axis=-1), np.argmax(pred, axis=-1)))
-    # predictions = model.predict(x_test, batch_size=batch_size, verbose=1)
+    pred = model.predict(x_test, batch_size=batch_size, verbose=1)
     # Returns boolean array of True and False [ True, False, False, ... ]
     return pred > 0.5
-
-
-def get_ensemble_preds(predictions_lst):
-    mode = stats.mode(np.asarray(predictions_lst))
-    return mode[0][0]
 
 
 # def process_img_batch(path_names):
