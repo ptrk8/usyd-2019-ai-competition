@@ -7,12 +7,11 @@ ensemble/
 aptos/
 submissions_aptos/
 fixtures/
-*lr**/
+lr*.py
 andrew.py
-**.sh*
-**.ps1*
-**.sh*
-*mnist**
+*.sh
+*.ps1
+mnist*
 small_test.py
 submission_aptos.py
-*test**
+test*
