@@ -8,8 +8,15 @@ To run our ensemble, simply run the `predict.py` file as shown below. The submis
 $ python predict.py /path/to/input/files
 ```
 
-## Hardware we used
+## Hardware and services we tested and used
 
+- Azure Notebooks - too slow and no GPU support
+- Google Colaboratory Notebooks - used this to test and prototype model structures since Google generously provides GPU support
+- Google Cloud AI Platform - experimented with this; however, strangely Google does not provide GPU access for accounts using their free trial
+- Kaggle Kernel - used this to test and prototype; however, performance is inferior to Colaboratory
+- Google Cloud Storage - used this to host datasets and files for our models since it allowed for easy integration with Colaboratory
+- Nvidia GTX1060 6GB - used this to prototype small networks locally at home
+- Nvidia RTX2080Ti - on the last few days we gained access to a server with a RTX2080Ti GPU and trained our outstanding models here
 
 
 ## Things we tried
