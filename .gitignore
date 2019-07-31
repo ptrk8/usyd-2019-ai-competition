@@ -15,3 +15,4 @@ mnist*
 small_test.py
 submission_aptos.py
 test*
+*.h5
