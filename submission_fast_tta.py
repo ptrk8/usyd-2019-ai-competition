@@ -28,7 +28,7 @@ from halo import Halo
 from pprint import pprint
 from keras.preprocessing.image import ImageDataGenerator
 
-TEST_DATA_PATH_NAME = './data/test_rgb_384_processed.h5'
+TEST_DATA_PATH_NAME = './data/test_rgb_512_processed.h5'
 SUBMISSION_FOLDER = './submissions'
 ENSEMBLE_FOLDER = './ensemble'
 BATCH_SIZE = 8
