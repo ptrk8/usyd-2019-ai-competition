@@ -2,11 +2,15 @@
 
 ## Install
 
-To run our ensemble, simply run the `predict.py` file as shown below. The submission file will be output in the directory this github repo will be saved down to.
+To run our ensemble, simply run the `predict.py` file as shown below. The submission file will be output in the directory this github repo is saved down to.
 
 ```bash
 $ python predict.py /path/to/input/files
 ```
+
+## Hardware we used
+
+
 
 ## Things we tried
 
@@ -62,6 +66,61 @@ We experimented with image height and widths of 256, 384 and 512 pixels and obse
 
 - DenseNet121
 - 
+
+### Model structures we experimented with
+
+Given we opted to use pre-trained ImageNet models, we decided to experiment with the structure of the model following the pre-trained network in an attempt to search for a gain in performance.
+
+#### Standard global average pooling layer
+```
+# These are the layers following the pre-trained model e.g. densenet model would be here
+model.add(layers.GlobalAveragePooling2D())
+model.add(layers.Dropout(0.5))
+# model.add(layers.Dense(NUM_CLASSES, activation='softmax'))
+model.add(layers.Dense(NUM_CLASSES, activation='sigmoid'))
+```
+#### Concatenating average and max pooling layers
+Here we are concatenating average and max pool layers to get the best of both worlds. In order to achieve this, we used Keras' functional API.
+```python
+# These are the layers following the pre-trained model e.g. densenet model would be here
+pool_1 = GlobalAveragePooling2D()(densenet.output)
+pool_2= GlobalMaxPooling2D()(densenet.output)
+concat_pool = concatenate([pool_1, pool_2])
+bat_1 = BatchNormalization(axis=1,momentum=0.1, epsilon=0.00001)(concat_pool)
+drop_1 = Dropout(0.5)(bat_1)
+linear_1 = Dense(1024, activation = 'relu')(drop_1)
+bat_2 = BatchNormalization(axis=1,momentum=0.1, epsilon=0.00001)(linear_1)
+drop_2 = Dropout(0.5)(bat_2)
+final = Dense(NUM_CLASSES, activation = 'sigmoid')(drop_2)
+model = Model(inputs = densenet.input, outputs = final)
+```
+#### Just using average pooling layer
+Here we are concatenating average and max pool layers to get the best of both worlds. In order to achieve this, we used Keras' functional API.
+```python
+# These are the layers following the pre-trained model e.g. densenet model would be here
+pool_1 = GlobalAveragePooling2D()(densenet.output)
+bat_1 = BatchNormalization(axis=1,momentum=0.1, epsilon=0.00001)(pool_1)
+drop_1 = Dropout(0.5)(bat_1)
+linear_1 = Dense(1024, activation = 'relu')(drop_1)
+bat_2 = BatchNormalization(axis=1,momentum=0.1, epsilon=0.00001)(linear_1)
+drop_2 = Dropout(0.5)(bat_2)
+final = Dense(NUM_CLASSES, activation = 'sigmoid')(drop_2)
+model = Model(inputs = densenet.input, outputs = final)
+```
+#### Just using max pooling layer
+Here we are concatenating average and max pool layers to get the best of both worlds. In order to achieve this, we used Keras' functional API.
+```python
+# These are the layers following the pre-trained model e.g. densenet model would be here
+pool_1 = GlobalMaxPooling2D()(densenet.output)
+bat_1 = BatchNormalization(axis=1,momentum=0.1, epsilon=0.00001)(pool_1)
+drop_1 = Dropout(0.5)(bat_1)
+linear_1 = Dense(1024, activation = 'relu')(drop_1)
+bat_2 = BatchNormalization(axis=1,momentum=0.1, epsilon=0.00001)(linear_1)
+drop_2 = Dropout(0.5)(bat_2)
+final = Dense(NUM_CLASSES, activation = 'sigmoid')(drop_2)
+model = Model(inputs = densenet.input, outputs = final)
+```
+
 
 ### Class types we experimented with
 
@@ -154,8 +213,10 @@ def lr_schedule(epoch):
     return lr
 ```
 
+
+
 ### ImageDataGenerator
-We used the ImageDataGenerator class in Keras to generate random transformations of our training dataset by rotating and flipping the images to prevent our model from overfitting. We opted to avoid cropping or zooming transformations given our test data would also be preprocessed so that the fundoscope is centred and the original aspect ratio would be maintained.
+We used the ImageDataGenerator class in Keras to generate random transformations of our training dataset by rotating and flipping the images to prevent our model from overfitting. We opted to avoid cropping or zooming transformations given our test data would also be preprocessed in a manner where  the fundoscope would be centred and the original aspect ratio would be maintained.
 
 ```python
 datagen = ImageDataGenerator(
@@ -166,7 +227,7 @@ datagen = ImageDataGenerator(
 ```
 
 ### Test Time Augmentation (TTA)
-We also experimented with test time augmentation (below); however, experienced worse results and therefore decided to opt against using it in our final model.
+We also experimented with test time augmentation (below); however, experienced worse results using it and therefore opted against including it in our final model.
 
 ```python
 def model_predict(x_test, path_to_model, batch_size=10):
@@ -184,3 +245,4 @@ def model_predict(x_test, path_to_model, batch_size=10):
     pred = np.mean(np.asarray(predictions), axis=0)
     return pred > 0.5
 ```
+
