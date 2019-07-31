@@ -20,6 +20,7 @@ BATCH_SIZE = 5
 
 class Metrics(Callback):
 
+
     def on_epoch_end(self, epoch, logs={}):
         X_val, y_val = self.validation_data[:2]
         y_val = y_val.sum(axis=1) - 1
