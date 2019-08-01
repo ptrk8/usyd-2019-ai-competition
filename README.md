@@ -55,7 +55,11 @@ def get_clahe_img(img, clip_limit, grid_size):
 
 However, we settled with standard RGB images since we didn't observe significant improvements using the above filters.
 
-Since we used transfer learning, we also preprocessed images according to what the models were original trained on. For example, for DenseNet121, we mean-centred all images.
+Since we used transfer learning, we also preprocessed images according to what the models were original trained on. For example, for DenseNet121, we mean-centred all images
+
+- Floating Point
+
+To conserve RAM on our earlier setups we decided to convert the data to `float16` so the bulk of our work was doing in `float16`. However, towards the end of the competition, with a setup which no longer had such RAM restrictions we noticed that `float32` performed slightly better for an equivalent dataset and model so in hindsight we should have ported all our earlier `float16` work to `float32` to potentially achieve greater results 
 
 ### Image sizes we tried
 We experimented with image height and widths of 256, 384 and 512 pixels and observed a positive relationship between image size and our model's predictive power so we settled on using images of 512 pixels in height and width.
