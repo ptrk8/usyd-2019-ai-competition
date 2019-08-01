@@ -2,6 +2,8 @@
 
 ## Install
 
+Before running the below, please ensure that you have downloaded our models from this [link](https://cloudstor.aarnet.edu.au/plus/s/RCeASfmeCIGXTZg). Please save these individual models (.h5 files) into a folder called `/ensembles` in this very directory.
+
 To run our ensemble, simply run the `predict.py` file as shown below. The submission file will be output in the directory this github repo is saved down to.
 
 ```bash
@@ -82,8 +84,7 @@ We experimented with image height and widths of 256, 384 and 512 pixels and obse
 
 ### Models we used in our final ensemble
 
-- DenseNet121
-- 
+We decided to ensemble DenseNet121 models from different epochs together given mixed results from ensembling the different models mentioned above.
 
 ### Model structures we experimented with
 
