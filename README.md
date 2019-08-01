@@ -59,7 +59,7 @@ Since we used transfer learning, we also preprocessed images according to what t
 
 - Floating Point
 
-To conserve RAM on our earlier setups we decided to convert the data to `float16` so the bulk of our work was doing in `float16`. However, towards the end of the competition, with a setup which no longer had such RAM restrictions we noticed that `float32` performed slightly better for an equivalent dataset and model so in hindsight we should have ported all our earlier `float16` work to `float32` to potentially achieve greater results 
+To conserve RAM on our earlier setups we decided to convert the data to `float16` so the bulk of our work was done in `float16`. However, towards the end of the competition, with a setup which no longer had such RAM restrictions we noticed that `float32` performed slightly better for an equivalent dataset and model so in hindsight we should have ported all our earlier `float16` work to `float32` to potentially achieve greater results 
 ```python
 x_train = np.asarray(x_train)
 x_test = np.asarray(x_test)
