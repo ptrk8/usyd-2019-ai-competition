@@ -15,12 +15,12 @@ from os.path import isfile, join, getsize
 from pprint import pprint
 import pandas as pd
 
-DIRECTORY = 'D:/diabetes/models/_script_standard_512_outputs'
+DIRECTORY = 'D:/diabetes/models/flagship'
 model_names = listdir(DIRECTORY)
 model_path_names = ['{}/{}'.format(DIRECTORY, name) for name in model_names if isfile(join(DIRECTORY, name))]
 
 
-file = h5py.File('D:/diabetes/kaggle/data_check_512.h5', 'r')
+file = h5py.File('D:/diabetes/kaggle/data_check_384.h5', 'r')
 
 x_test = file['x_check']
 y_test = file['y_check']
