@@ -143,7 +143,7 @@ model = Model(inputs = densenet.input, outputs = final)
 
 ### Class types we experimented with
 
-We experimented with class types by representing the problem as a multi-class, regression and multi-label problem and observed our model performed better when the problem was represented as a multi-label problem. This can be justified by the fact that certain features in more severe cases of diabetic retinopathy may also be present in less severe cases. Below is how we encoded each label as a multi class
+We experimented with class types by representing the problem as a multi-class, regression and multi-label problem and observed our model performed better when the problem was represented as a multi-label problem. This can be justified by the fact that certain features in more severe cases of diabetic retinopathy may also be present in less severe cases. Below is how we encoded each label as a multi label.
 
 ```bash
 Label: 0 => [1, 0, 0, 0, 0]
