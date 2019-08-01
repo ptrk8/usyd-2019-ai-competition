@@ -16,7 +16,7 @@ $ python predict.py /path/to/input/files
 - Kaggle Kernel - used this to test and prototype; however, performance is inferior to Colaboratory
 - Google Cloud Storage - used this to host datasets and files for our models since it allowed for easy integration with Colaboratory
 - Nvidia GTX1060 GPU - used this to prototype small networks locally at home
-- Nvidia RTX2080Ti GPU - on the last few days we gained access to a server with a RTX2080Ti GPU and trained our outstanding models here
+- Nvidia RTX2080Ti GPU - on the last few days we gained access to a server with a RTX2080Ti GPU and trained our remaining models here
 
 
 ## Things we tried
@@ -206,6 +206,11 @@ Our experiments showed optimising on F1-score yielded similar results to binary 
 - RMSProp
 
 From our experiments we concluded that SGD typically converged to a more globally optimal solution than dynamic optimizers like Adam.
+
+### Freezing
+
+We also experimented with a two-stage training process by freezing the pre-trained models first while training the latter layers. Once the latter layers converged, we then trained the entire model unfrozen. After comparing results, we opted against this approach as we didn't observe a significant improvement in accuracy.
+
 
 ### Learning rate schedule
 
