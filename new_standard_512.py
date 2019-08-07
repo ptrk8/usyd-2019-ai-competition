@@ -1,3 +1,6 @@
+import os
+os.environ["CUDA_VISIBLE_DEVICES"] = "1"
+
 import tensorflow as tf
 config = tf.ConfigProto()
 config.gpu_options.allow_growth = True
@@ -10,22 +13,16 @@ from keras.utils.np_utils import to_categorical
 from keras.preprocessing.image import ImageDataGenerator
 import numpy as np
 import h5py
-from keras.callbacks import Callback
+from keras.callbacks import Callback, LearningRateScheduler
 from sklearn.metrics import cohen_kappa_score
-from utils import get_custom_callback
-import os
+from utils import get_custom_callback, to_multi_label, best_lr_decay
 import sys
 
 
-IMG_SIZE = 384  # this must correspond with what is in .h5 file
+IMG_SIZE = 512  # this must correspond with what is in .h5 file
 NUM_CLASSES = 5  # 5 output classes
 NUM_EPOCHS = 50  # number of epochs
-BATCH_SIZE = 5
-
-
-def get_values():
-    file = h5py.File('./data/data_rgb_384_processed.h5', 'r')
-    return file['x_train'], file['y_train'], file['x_test'], file['y_test']
+BATCH_SIZE = 8
 
 
 def main():
@@ -41,15 +38,18 @@ def main():
         pass
 
     # Model below this line ================================================
-
+    learn_rate = LearningRateScheduler(best_lr_decay, verbose=1)
     custom_callback = get_custom_callback('multi_label', './{}'.format(output_path_name))
-    callbacks_list = [custom_callback]
+    callbacks_list = [custom_callback, learn_rate]
 
-
-    x_train, y_train, x_test, y_test = get_values()
+    file = h5py.File('/albona/nobackup/andrewl/DeepLearning/data/data_rgb_512_processed.h5', 'r')
+    x_train, y_train, x_test, y_test = file['x_train'], file['y_train'], file['x_test'], file['y_test']
 
     y_train = to_categorical(y_train, NUM_CLASSES)
     y_test = to_categorical(y_test, NUM_CLASSES)
+
+    y_train = to_multi_label(y_train)
+    y_test = to_multi_label(y_test)
 
     datagen = ImageDataGenerator(
         horizontal_flip=True,
@@ -60,7 +60,7 @@ def main():
     model = Sequential()
 
     densenet = DenseNet121(
-        weights='./DenseNet-BC-121-32-no-top.h5',
+        weights='imagenet',
         include_top=False,
         input_shape=(IMG_SIZE, IMG_SIZE, 3)
     )
