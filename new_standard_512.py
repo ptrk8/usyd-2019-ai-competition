@@ -42,7 +42,7 @@ def main():
     custom_callback = get_custom_callback('multi_label', './{}'.format(output_path_name))
     callbacks_list = [custom_callback, learn_rate]
 
-    file = h5py.File('/albona/nobackup/andrewl/DeepLearning/data/data_rgb_512_processed.h5', 'r')
+    file = h5py.File('/albona/nobackup/andrewl/process/old_data_rgb_512_processed.h5', 'r')
     x_train, y_train, x_test, y_test = file['x_train'], file['y_train'], file['x_test'], file['y_test']
 
     y_train = to_categorical(y_train, NUM_CLASSES)

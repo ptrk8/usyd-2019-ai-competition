@@ -2,39 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ef6f0bc8-6edc-46e4-bf9d-dde31311ccdd" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/diabetes.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/diabetes.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/baseline.py" beforeDir="false" afterPath="$PROJECT_DIR$/baseline.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/brute.py" beforeDir="false" afterPath="$PROJECT_DIR$/brute.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gpu.py" beforeDir="false" afterPath="$PROJECT_DIR$/gpu.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kappa.py" beforeDir="false" afterPath="$PROJECT_DIR$/kappa.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/predict.py" beforeDir="false" afterPath="$PROJECT_DIR$/predict.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/process.py" beforeDir="false" afterPath="$PROJECT_DIR$/process.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/script_average_512.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/script_extended_512.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/script_inception_512_bflr.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/script_mobile_512_bflr.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/script_resnet_512.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/script_resnet_512_bflr.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/script_small_512_bflr.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/script_standard_384.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/script_standard_384_res.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/script_standard_512.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/script_standard_512_bflr.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/script_standard_512_bflr_f1.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/script_standard_512_bflr_kappa_tefla.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/submission.csv" beforeDir="false" afterPath="$PROJECT_DIR$/submission.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/submission.py" beforeDir="false" afterPath="$PROJECT_DIR$/submission.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/submission_fast.py" beforeDir="false" afterPath="$PROJECT_DIR$/submission_fast.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/submission_fast_tta.py" beforeDir="false" afterPath="$PROJECT_DIR$/submission_fast_tta.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/submission_x_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/submission_x_test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template.py" beforeDir="false" afterPath="$PROJECT_DIR$/template.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/new_standard_512.py" beforeDir="false" afterPath="$PROJECT_DIR$/new_standard_512.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -54,6 +22,15 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="468">
+              <caret line="18" column="4" lean-forward="true" selection-start-line="18" selection-start-column="4" selection-end-line="18" selection-end-column="4" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/small_test.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="1099">
@@ -65,17 +42,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/new_standard_512.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="898">
-              <caret line="40" column="12" lean-forward="true" selection-start-line="40" selection-start-column="12" selection-end-line="40" selection-end-column="12" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/submission_fast.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1092">
-              <caret line="42" selection-start-line="42" selection-end-line="42" />
+            <state relative-caret-position="988">
+              <caret line="38" lean-forward="true" selection-start-line="38" selection-end-line="38" />
             </state>
           </provider>
         </entry>
@@ -220,6 +188,7 @@
         <option value="$PROJECT_DIR$/brute.py" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/new_standard_512.py" />
       </list>
     </option>
   </component>
@@ -243,11 +212,6 @@
             <path>
               <item name="diabetes" type="b2602c69:ProjectViewProjectNode" />
               <item name="diabetes" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="diabetes" type="b2602c69:ProjectViewProjectNode" />
-              <item name="diabetes" type="462c0819:PsiDirectoryNode" />
-              <item name="old_models" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -581,13 +545,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="364">
-          <caret line="14" column="11" selection-start-line="14" selection-start-column="11" selection-end-line="14" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
@@ -684,10 +641,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="468">
+          <caret line="18" column="4" lean-forward="true" selection-start-line="18" selection-start-column="4" selection-end-line="18" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/new_standard_512.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="898">
-          <caret line="40" column="12" lean-forward="true" selection-start-line="40" selection-start-column="12" selection-end-line="40" selection-end-column="12" />
+        <state relative-caret-position="988">
+          <caret line="38" lean-forward="true" selection-start-line="38" selection-end-line="38" />
         </state>
       </provider>
     </entry>
