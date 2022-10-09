@@ -1,4 +1,4 @@
-# 'halp' Team Submission for USYD Challenge
+# Submission for USYD Challenge
 
 ## Install
 
